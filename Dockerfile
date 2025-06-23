@@ -27,7 +27,7 @@ RUN dnf -y install 'dnf5-command(config-manager)' \
 	&& systemctl enable tailscaled
 
 # Install docker
-RUN dnf install -y docker-cli containerd docker-compose moby-engine wget
+RUN dnf install -y docker-cli containerd docker-compose moby-engine wget unzip
 
 # Install nomad & consul and configure them
 RUN wget https://releases.hashicorp.com/nomad/1.10.2/nomad_1.10.2_linux_arm64.zip && unzip nomad_1.10.2_linux_arm64.zip \
