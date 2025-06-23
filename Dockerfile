@@ -30,10 +30,10 @@ RUN dnf -y install 'dnf5-command(config-manager)' \
 RUN dnf install -y docker-cli containerd docker-compose moby-engine
 
 # Install nomad & consul and configure them
-RUN curl https://releases.hashicorp.com/nomad/1.10.2/nomad_1.10.2_linux_arm64.zip && unzip nomad_1.10.2_linux_arm64.zip \
+RUN curl -fsSl https://releases.hashicorp.com/nomad/1.10.2/nomad_1.10.2_linux_arm64.zip && unzip nomad_1.10.2_linux_arm64.zip \
     && mv nomad_1.10.2_linux_arm64/nomad /usr/bin/nomad \
     && rm -rf nomad_1.10.2_linux_arm64 && rm -rf nomad_1.10.2_linux_arm64.zip \
-    && curl https://releases.hashicorp.com/consul/1.21.1/consul_1.21.1_linux_arm64.zip && unzip consul_1.21.1_linux_arm64.zip \
+    && curl -fsSl https://releases.hashicorp.com/consul/1.21.1/consul_1.21.1_linux_arm64.zip && unzip consul_1.21.1_linux_arm64.zip \
     && mv consul_1.21.1_linux_arm64/consul /usr/bin/consul \
     && rm -rf consul_1.21.1_linux_arm64 && rm -rf consul_1.21.1_linux_arm64.zip \
     && $(useradd nomad -s /bin/false -d /etc/nomad/nomad.d -G docker || true) \
