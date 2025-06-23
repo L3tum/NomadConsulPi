@@ -1,0 +1,11 @@
+[Unit]
+Description=Serves Nomad over the tailnet
+Wants=setup.service,nomad.service
+After=setup.service,nomad.service
+
+[Service]
+Type=simple
+ExecStart=tailscale serve 4646
+
+[Install]
+WantedBy=multi-user.target

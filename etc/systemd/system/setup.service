@@ -1,0 +1,12 @@
+[Unit]
+Description=Sets up everything we need and acts as starting point for our services
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/local/bin/setup_custom.sh
+
+[Install]
+WantedBy=multi-user.target

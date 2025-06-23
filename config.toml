@@ -1,0 +1,20 @@
+[[customizations.directories]]
+path = "/etc/secrets"
+mode = "0755"
+user = "root"
+group = "root"
+ensure_parents = false
+
+[[customizations.files]]
+path = "/etc/secrets/tailscale"
+mode = "0644"
+user = "root"
+group = "root"
+data = "TAILSCALE_SECRET"
+
+[[customizations.files]]
+path = "/etc/secrets/consul"
+mode = "0644"
+user = "root"
+group = "root"
+data = "CONSUL_GOSSIP_KEY"

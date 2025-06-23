@@ -1,0 +1,24 @@
+[Unit]
+Description=Nomad
+Wants=network-online.target,setup.service,consul.service
+After=network-online.target,setup.service,consul.service
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=nomad
+Group=nomad
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/bin/nomad agent -config /etc/nomad/nomad.d
+ExecStop=/bin/kill $MAINPID
+KillMode=process
+KillSignal=SIGINT
+LimitNOFILE=65536
+LimitNPROC=infinity
+Restart=on-failure
+RestartSec=2
+TasksMax=infinity
+OOMScoreAdjust=-1000
+
+[Install]
+WantedBy=multi-user.target
