@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:43
+FROM quay.io/fedora/fedora-bootc:42
 
 ADD usr /usr
 ADD etc /etc
@@ -42,3 +42,5 @@ RUN dnf clean all && rm -rf /var/cache/dnf
 RUN echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.d/99-tailscale.conf \
     && echo 'net.ipv6.conf.all.forwarding = 1' >> /etc/sysctl.d/99-tailscale.conf \
     && systemctl enable network-opt.service
+
+RUN bootc container lint
