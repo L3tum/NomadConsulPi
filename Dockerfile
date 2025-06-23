@@ -1,4 +1,4 @@
-FROM quay.io/fedora/fedora-bootc:42
+FROM quay.io/fedora/fedora-bootc:43
 
 ADD usr /usr
 ADD etc /etc
@@ -26,10 +26,16 @@ RUN dnf -y install 'dnf5-command(config-manager)' \
 	&& dnf -y install tailscale \
 	&& systemctl enable tailscaled
 
+# Install docker
+RUN dnf install -y docker-cli containerd docker-compose moby-engine
+
 # Install nomad & consul and configure them
-RUN dnf install -y wget && wget -O- https://rpm.releases.hashicorp.com/fedora/hashicorp.repo | tee /etc/yum.repos.d/hashicorp.repo \
-    && dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo \
-    && dnf install -y consul nomad docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
+RUN curl https://releases.hashicorp.com/nomad/1.10.2/nomad_1.10.2_linux_arm64.zip && unzip nomad_1.10.2_linux_arm64.zip \
+    && mv nomad_1.10.2_linux_arm64/nomad /usr/bin/nomad \
+    && rm -rf nomad_1.10.2_linux_arm64 && rm -rf nomad_1.10.2_linux_arm64.zip \
+    && curl https://releases.hashicorp.com/consul/1.21.1/consul_1.21.1_linux_arm64.zip && unzip consul_1.21.1_linux_arm64.zip \
+    && mv consul_1.21.1_linux_arm64/consul /usr/bin/consul \
+    && rm -rf consul_1.21.1_linux_arm64 && rm -rf consul_1.21.1_linux_arm64.zip \
     && $(useradd nomad -s /bin/false -d /etc/nomad/nomad.d -G docker || true) \
     && chown -R nomad:nomad /etc/nomad \
     && systemctl enable nomad.service \
