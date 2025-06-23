@@ -27,7 +27,7 @@ RUN dnf -y install 'dnf5-command(config-manager)' \
 	&& systemctl enable tailscaled
 
 # Install nomad & consul and configure them
-RUN dnf config-manager --add-repo=https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo \
+RUN dnf config-manager addrepo --from-repofile=https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo \
     && dnf install -y consul nomad docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin \
     && useradd nomad -s /bin/false -d /etc/nomad/nomad.d -G docker \
     && chown -R nomad:nomad /etc/nomad \
