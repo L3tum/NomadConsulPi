@@ -8,4 +8,4 @@ fi
 tailscale up --ssh --auth-key="$(cat /etc/secrets/tailscale)"
 rm /etc/secrets/tailscale
 
-sed -i "s/XXX/$(cat /etc/secrets/consul)/g" /etc/consul/consul.d/server.hcl
+sed -i -e "s%XXX%$(cat /etc/secrets/consul)%g" /etc/consul/consul.d/server.hcl
