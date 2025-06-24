@@ -32,10 +32,10 @@ RUN dnf install -y docker-cli containerd docker-compose moby-engine wget unzip
 # Install nomad & consul and configure them
 RUN wget https://releases.hashicorp.com/nomad/1.10.2/nomad_1.10.2_linux_arm64.zip && unzip nomad_1.10.2_linux_arm64.zip \
     && mv nomad /usr/bin/nomad \
-    && rm -rf nomad_1.10.2_linux_arm64.zip \
+    && rm -rf nomad_1.10.2_linux_arm64.zip && rm LICENSE.txt \
     && wget https://releases.hashicorp.com/consul/1.21.1/consul_1.21.1_linux_arm64.zip && unzip consul_1.21.1_linux_arm64.zip \
     && mv consul /usr/bin/consul \
-    && rm -rf consul_1.21.1_linux_arm64.zip \
+    && rm -rf consul_1.21.1_linux_arm64.zip && rm LICENSE.txt \
     && $(useradd nomad -s /bin/false -d /etc/nomad/nomad.d -G docker || true) \
     && chown -R nomad:nomad /etc/nomad \
     && systemctl enable nomad.service \
